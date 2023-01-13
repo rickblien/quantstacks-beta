@@ -1,0 +1,8 @@
+# install
+# 'pip3 install pipreqs'
+
+# Run in current directory to create requitements.txt file
+# 'python3 -m  pipreqs.pipreqs'
+
+
+streamlit==1.16.0
