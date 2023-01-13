@@ -8,4 +8,20 @@ git status
 git add .
 git status
 git commit - m "Title: Added a new filename.py" -m "Description Box: DCF program"
-git push origin Dev 
+git push -u origin Dev 
+
+# Shows all branches
+
+git branch
+
+# Create a new branch
+
+git checkout -b feature-buffett-indicator
+
+# Download specific branch
+
+git checkout Dev
+
+git checkout feature-buffett-indicator
+
+
