@@ -1,8 +1,10 @@
 # 'https://www.youtube.com/watch?v=bi0cKgmRuiA'
+# 'https://docs.streamlit.io/knowledge-base/tutorials/deploy/docker'
+
 # Dockerfile, Image, Container
 
 # Base Image
-FROM python:3-onbuild
+FROM python:3.9-slim
 
 # Creaete a working directory for a starting point inside docker container
 WORKDIR /usr/src/app
