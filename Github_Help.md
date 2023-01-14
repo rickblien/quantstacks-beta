@@ -20,7 +20,7 @@ git branch
 git diff feature-buffett-indicator
 
 # Upload program from LOCAL MACHINE to GITHUB feature-buffett-indicator branch
-git add -all
+git add .
 git status
 git commit -m "Title: Added a new filename.py" -m "Description Box: DCF program"
 git push -u origin feature-buffett-indicator
@@ -37,6 +37,10 @@ git reset HEAD~1
 # Undo specific git commit
 git log
 git reset 34j2hh5453256345345252
+
+# Undo multiple consecutive git commit
+git log
+git reset --hard 34j2hh5453256345345252
 
 # Merge feature-buffett-indicator branch to Dev (main)
 git merge feature-buffett-indicator
