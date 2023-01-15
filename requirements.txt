@@ -1,8 +1,4 @@
-# install
-# 'pip3 install pipreqs'
-
-# Run in current directory to create requitements.txt file
-# 'python3 -m  pipreqs.pipreqs'
-
-
+bokeh==3.0.3
+pandas==1.5.2
 streamlit==1.16.0
+yfinance==0.2.3
