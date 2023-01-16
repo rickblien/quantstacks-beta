@@ -29,14 +29,15 @@ def risk_free_rate(country_option):
         usa_10years_bond = usa_10years_bond.iloc[0]['10y_bond'] 
         usa_10years_bond = float(usa_10years_bond.replace("%","")) /100
 
-        # Selected Country Default Spread
+        # Calculate: Selected Country Default Spread
         country_default_spread_usd = country_10years_bond - usa_10years_bond
 
-        # Calculate Selected Country Risk Free Rate
+        # Calculate: Selected Country Risk Free Rate 
         country_risk_free_rate = usa_10years_bond - country_default_spread_usd
         
-        
+        # Create a list contains country_10years_bond, usa_10years_bond,country_default_spread_usd,country_risk_free_rate
         listd = [country_10years_bond, usa_10years_bond,country_default_spread_usd,country_risk_free_rate]
+        
         return listd
     except:
         st.write(country_option + "failed!")
@@ -64,10 +65,16 @@ for country in country_option:
     temp_table.insert(0,country)
     country_data_in_table.append(temp_table)
 
+# Create a column nanmes for risk free rate table
+risk_free_rate_column_names = ["Country", "10years bond", "USA 10years bond","Default Spread", "Risk Free Rate"]
 
-colu = ["Country", "10years bond", "USA 10years bond","Default Spread", "Risk Free Rate"]
-inde = range(len(country_option))
-risk_free_rate_df = pd.DataFrame(data= country_data_in_table,index=inde,columns=colu)
+# Create row length for risk free rate table
+risk_free_rate_row_length = range(len(country_option))
+
+# Create a DataFrame for risk free rate 
+risk_free_rate_df = pd.DataFrame(data= country_data_in_table,index=risk_free_rate_row_length,columns=risk_free_rate_column_names)
+
+# Display risk free rate DataFrame in Streamlit
 st.table(risk_free_rate_df)
 
 
