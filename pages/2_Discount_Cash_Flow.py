@@ -37,7 +37,7 @@ def risk_free_rate(country_option):
         
         # Create a list contains country_10years_bond, usa_10years_bond,country_default_spread_usd,country_risk_free_rate
         listd = [country_10years_bond, usa_10years_bond,country_default_spread_usd,country_risk_free_rate]
-        
+
         return listd
     except:
         st.write(country_option + "failed!")
@@ -83,6 +83,15 @@ st.write('Beta')
 
 # IMPLIED EQUITY RISK PREMIUM
 st.write('Implied Equity Risk Premium')
+
+# Get current price of stock
+
+# Get Risk Free Rate
+
+# Scrape Analysts 5 years growth estimate
+
+# Calculate Expected Return on Stock
+
 # Selected Country Risk Premium
 
 # Selected Equity Risk Premium
