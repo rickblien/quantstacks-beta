@@ -1,36 +1,75 @@
 import streamlit as st
+import pandas as pd
+
+# list all rows
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
 
 st.title('DISCOUNTED CASH FLOW VALUATION (DCF)')
 
+
 st.header('Discount Rate (WACC)')
+
 
 st.write('COST OF EQUITY')
 
 # RISK FREE RATE
 st.write('Risk Free Rate')
-# def risk_free_rate(country_option):
-#     try:
-# Scrape Counties 10 years bond rate
+def risk_free_rate(country_option):
+    try:
+        # Filter out selected country 10 years bond
+        filter_country_10y_bond = (countries_10_years_bond_rate['country_name'] == country_option)
+        country_10years_bond = countries_10_years_bond_rate[filter_country_10y_bond]
+        country_10years_bond = country_10years_bond.iloc[0]['10y_bond'] 
+        country_10years_bond = float(country_10years_bond.replace("%","")) /100
+
+        # USA 10 years bond
+        filter_usa_10years_bond = (countries_10_years_bond_rate['country_name'] == 'United States')
+        usa_10years_bond = countries_10_years_bond_rate[filter_usa_10years_bond]
+        usa_10years_bond = usa_10years_bond.iloc[0]['10y_bond'] 
+        usa_10years_bond = float(usa_10years_bond.replace("%","")) /100
+
+        # Selected Country Default Spread
+        country_default_spread_usd = country_10years_bond - usa_10years_bond
+
+        # Calculate Selected Country Risk Free Rate
+        country_risk_free_rate = usa_10years_bond - country_default_spread_usd
+        
+        
+        listd = [country_10years_bond, usa_10years_bond,country_default_spread_usd,country_risk_free_rate]
+        return listd
+    except:
+        st.write(country_option + "failed!")
+        pass
+
+# Scrape Countries 10 years government bond rates
 import pandas as pd
 countries_10_years_bond_rate = pd.read_html("http://www.worldgovernmentbonds.com/", header=0)[1]
-st.write(countries_10_years_bond_rate)
+countries_10_years_bond_rate.rename(columns={"Unnamed: 0":"Nan","Unnamed: 1":"country_name","Rating":"rating","10Y Bond":"10y_bond","10Y Bond.1":"10y_bond_1","Bank":"bank", "Spread vs":"spread_vs", "Spread vs.1":"spread_vs_1"},inplace=True)
+country_name = countries_10_years_bond_rate['country_name'][1:].tolist() 
 
-# Rename column names
-countries_10_years_bond_rate.rename(columns={"Unnamed: 0":"Nan","Unnamed: 1":"country_name","Rating":"rating","10Y Bond":"10y_bond","10Y Bond.1":"10y_bond_1","Bank":"bank", "Spread vs":"spread_vs_german", "Spread vs.1":"spread_vs_usa"},inplace=True)
-st.write(countries_10_years_bond_rate)
+# create an empty tables
+country_data_in_table = []
+temp_table = []
 
-# Get country name list
-country_names_list = countries_10_years_bond_rate['country_name'].tolist()
-st.write(country_names_list)
+# streamlit multiselect dropdown bar
+country_option = st.multiselect(
+    label = "Which countries?",
+    options = country_name,
+    default = 'United States')
 
-# Filter out Selected country 10 years bond
+# loop through selected countries from multiselect dropdown bar
+for country in country_option:
+    temp_table = risk_free_rate(country)
+    temp_table.insert(0,country)
+    country_data_in_table.append(temp_table)
 
-# Calculate: Selected Country Default Spread = Selected Country 10 years bond - USA 10 years bond
 
-# Calculate: Selected Country Risk Free Rate = USA 10 years bond - Selected Country Default Spread
+colu = ["Country", "10years bond", "USA 10years bond","Default Spread", "Risk Free Rate"]
+inde = range(len(country_option))
+risk_free_rate_df = pd.DataFrame(data= country_data_in_table,index=inde,columns=colu)
+st.table(risk_free_rate_df)
 
-# except:
-#     pass 
 
 # BETA
 st.write('Beta')
@@ -55,5 +94,6 @@ st.write('Tax Shield')
 
 
 st.header('Terminal Value')
+
 
 st.header('Projected Cash Flow')
