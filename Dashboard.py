@@ -10,8 +10,8 @@ ssl._create_default_https_context = ssl._create_unverified_context
 import warnings
 warnings.filterwarnings('ignore')
 
-# pd.set_option('display.max_colwidth', -1)
-# pd.set_option('expand_frame_repr', False)
+pd.set_option('display.max_colwidth', -1)
+pd.set_option('expand_frame_repr', False)
 
 st.set_page_config(
     page_title="QuantStacks Beta",
@@ -26,38 +26,38 @@ stockchart = st.container()
 
 with header:
     st.title("QuantStacks Beta")
-    # st.header("Buffett's Indicators")
+    st.header("Buffett's Indicators")
 
-    # # Pull WIlshire 5000 Price data
-    # wilshire_price = fred.get_series('WILL5000PR', observation_start='1970-01-01')
-    # wilshire_price = pd.DataFrame(wilshire_price, columns={'wilshire5K'})
-    # wilshire_price = wilshire_price.dropna()
-    # # st.write(wilshire_price.tail())
+    # Pull WIlshire 5000 Price data
+    wilshire_price = fred.get_series('WILL5000PR', observation_start='1970-01-01')
+    wilshire_price = pd.DataFrame(wilshire_price, columns={'wilshire5K'})
+    wilshire_price = wilshire_price.dropna()
+    # st.write(wilshire_price.tail())
 
-    # # Pull US GDP data and set frequency data to daily and ffill data
-    # gdp_data = fred.get_series('GDP', observation_start='1970-01-01').asfreq('d').ffill()
-    # gdp_data = pd.DataFrame(gdp_data, columns={'GDP'})
-    # # st.write(gdp_data.tail())
+    # Pull US GDP data and set frequency data to daily and ffill data
+    gdp_data = fred.get_series('GDP', observation_start='1970-01-01').asfreq('d').ffill()
+    gdp_data = pd.DataFrame(gdp_data, columns={'GDP'})
+    # st.write(gdp_data.tail())
 
-    # # Concat dataframes to calculate Buffett Indicator
-    # combined = pd.concat([wilshire_price, gdp_data],  axis=1).dropna()
-    # combined['buffett_ind'] = combined['wilshire5K'] / combined['GDP']
-    # # st.write(combined.tail())
+    # Concat dataframes to calculate Buffett Indicator
+    combined = pd.concat([wilshire_price, gdp_data],  axis=1).dropna()
+    combined['buffett_ind'] = combined['wilshire5K'] / combined['GDP']
+    # st.write(combined.tail())
 
-    # # Calculate Buffet Indicator stats
-    # stats = combined['buffett_ind'].describe()
-    # # st.write(stats)
+    # Calculate Buffet Indicator stats
+    stats = combined['buffett_ind'].describe()
+    # st.write(stats)
 
-    # # Plot Buffet Indicator 
-    # combined['buffett_ind'].plot(figsize=(16,8), title='Wilshire 5000 Price Index / GDP (Buffett Indicator)', grid=True, xlabel='Date', ylabel= '%', c='b')
-    # plt.axhline(stats['mean'], c='y', label='Mean')
-    # plt.axhline(stats['50%'], label='Mode', c='c')
-    # plt.axhline(stats['25%'], label='25%', c='g')
-    # plt.axhline(stats['75%'], label='75%', c='r')
-    # plt.legend()
+    # Plot Buffet Indicator 
+    combined['buffett_ind'].plot(figsize=(16,8), title='Wilshire 5000 Price Index / GDP (Buffett Indicator)', grid=True, xlabel='Date', ylabel= '%', c='b')
+    plt.axhline(stats['mean'], c='y', label='Mean')
+    plt.axhline(stats['50%'], label='Mode', c='c')
+    plt.axhline(stats['25%'], label='25%', c='g')
+    plt.axhline(stats['75%'], label='75%', c='r')
+    plt.legend()
     
-    # with st.expander("Buffett Indicator"):
-    #     st.pyplot(plt)
+    with st.expander("Buffett Indicator"):
+        st.pyplot(plt)
 
 # with watchlist:
     # st.header(watchlist)
@@ -142,16 +142,6 @@ with stockchart:
         with st.expander(stock + " Stock Chart", expanded=True ):
             st.plotly_chart(fig, expanded=False, use_container_width=True)
 
-    tab1, tab2, tab3 = st.tabs(["Watch List", "Stock Scanner", "Backtest"])
 
-
-    with tab1:
-        st.write('Watch List')
-    
-    with tab2:
-        st.write('Stock Scanners')
-
-    with tab3:
-        st.write('Backtest')
 
 
