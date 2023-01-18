@@ -292,10 +292,10 @@ with dcf:
 
 
             # Discount Rate (WACC)
-            try:
-                Discount_Rate_WACC = (Weight_of_Equity * Cost_of_Equity) + (Weight_of_Debt * Cost_of_Debt) * (1 - Effective_Tax_Rate)
-            except:
-                pass 
+            # try:
+            #     Discount_Rate_WACC = (Weight_of_Equity * Cost_of_Equity) + (Weight_of_Debt * Cost_of_Debt) * (1 - Effective_Tax_Rate)
+            # except:
+            #     pass 
 
             # Analyst Growth Estimate
             try:
@@ -366,13 +366,13 @@ with dcf:
                 pass 
 
             # Discounted Future Cash Flow
-            try:
-                discountedfuturefreecashflow = []
-                for i in range(0, len(years)):
-                    discountedfuturefreecashflow.append(futurefreecashflow[i]/discountfactor[i])
-                discountedfuturefreecashflow
-            except:
-                pass 
+            # try:
+            #     discountedfuturefreecashflow = []
+            #     for i in range(0, len(years)):
+            #         discountedfuturefreecashflow.append(futurefreecashflow[i]/discountfactor[i])
+            #     discountedfuturefreecashflow
+            # except:
+            #     pass 
 
 
         except:
